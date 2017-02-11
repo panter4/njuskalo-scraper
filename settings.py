@@ -11,25 +11,23 @@
 
 BOT_NAME = 'njuskalo'
 
-SPIDER_MODULES = ['njuskalo.spiders']
-NEWSPIDER_MODULE = 'njuskalo.spiders'
+SPIDER_MODULES = ['spiders']
+ # NEWSPIDER_MODULE = 'njuskalo'
 
 # ITEM_PIPELINES = ['njuskalo.pipelines.JsonWriterPipeline']
 
 
-ITEM_PIPELINES = {
-    'scrapyelasticsearch.scrapyelasticsearch.ElasticSearchPipeline',
-}
+ITEM_PIPELINES = {'scrapyelasticsearch.scrapyelasticsearch.ElasticSearchPipeline':500}
 
-ELASTICSEARCH_SERVERS = ['https://elastic:7S3PKgfesSvGC9t6uT3Z8WmR@3e6cd9ae150c3d1f6f5a8a246a8a0a91.eu-west-1.aws.found.io:9243']
-ELASTICSEARCH_INDEX = 'njuskalo'
-# ELASTICSEARCH_INDEX_DATE_FORMAT = '%Y-%m'
-ELASTICSEARCH_TYPE = 'items'
-ELASTICSEARCH_UNIQ_KEY = 'id'  # Custom uniqe key
+ELASTICSEARCH_SERVERS = ['http://search-panter4-p7ocqhgdiixspehfm6hmdseypy.eu-central-1.es.amazonaws.com:80'],
+ELASTICSEARCH_INDEX = 'njuskalo',
+ELASTICSEARCH_INDEX_DATE_FORMAT = '%Y-%m',
+ELASTICSEARCH_TYPE = 'items',
+ELASTICSEARCH_UNIQ_KEY = 'id'  # Custom uniqe key,
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'njuskalo (+http://www.yourdomain.com)'
+USER_AGENT = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 CONCURRENT_REQUESTS=64

@@ -16,11 +16,11 @@ class NjuskaloSpider(scrapy.Spider):
 
     def __init(self):
         self.pagenum = 1
-        self.LOG_LEVEL = logging.CRITICAL
+        self.LOG_LEVEL = logging.INFO
     
     def parse(self, response):
-        print("Existing settings: %s" % self.settings.attributes.keys())
-        print("Existing settings: %s" % self.settings.attributes.values())
+        # print("Existing settings: %s" % self.settings.attributes.keys())
+        # print("Existing settings: %s" % self.settings.attributes.values())
         yield scrapy.Request(response.url, self.parse_category)
 
     def parse_category(self,response):

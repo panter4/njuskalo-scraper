@@ -15,7 +15,7 @@ if __name__ == "__main__":
         'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)',
         # 'ITEM_PIPELINES': ['pipelines.JsonWriterPipeline']
         # 'ITEM_PIPELINES': ['pipelines.MongoPipeline']
-        'ITEM_PIPELINES': {'pipelines.ElasticSearchPipeline'},
+        'ITEM_PIPELINES': {'scrapyelasticsearch.scrapyelasticsearch.ElasticSearchPipeline':500},
 
         # 'ITEM_PIPELINES' : {'scrapyelasticsearch.scrapyelasticsearch.ElasticSearchPipeline',},
         # 'ELASTICSEARCH_SERVERS' : ['https://elastic:7S3PKgfesSvGC9t6uT3Z8WmR@3e6cd9ae150c3d1f6f5a8a246a8a0a91.eu-west-1.aws.found.io:9243'],
