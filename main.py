@@ -18,7 +18,8 @@ if __name__ == "__main__":
         'ITEM_PIPELINES': {'pipelines.ElasticSearchPipeline'},
 
         # 'ITEM_PIPELINES' : {'scrapyelasticsearch.scrapyelasticsearch.ElasticSearchPipeline',},
-        'ELASTICSEARCH_SERVERS' : ['https://elastic:7S3PKgfesSvGC9t6uT3Z8WmR@3e6cd9ae150c3d1f6f5a8a246a8a0a91.eu-west-1.aws.found.io:9243'],
+        # 'ELASTICSEARCH_SERVERS' : ['https://elastic:7S3PKgfesSvGC9t6uT3Z8WmR@3e6cd9ae150c3d1f6f5a8a246a8a0a91.eu-west-1.aws.found.io:9243'],
+        'ELASTICSEARCH_SERVERS' : ['search-panter4-p7ocqhgdiixspehfm6hmdseypy.eu-central-1.es.amazonaws.com:80'],
         'ELASTICSEARCH_INDEX' : 'njuskalo',
         # 'ELASTICSEARCH_INDEX_DATE_FORMAT' : '%Y-%m',
         'ELASTICSEARCH_TYPE' : 'items',

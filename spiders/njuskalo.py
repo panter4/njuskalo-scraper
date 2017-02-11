@@ -9,7 +9,7 @@ class NjuskaloSpider(scrapy.Spider):
     start_urls = [
         'http://www.njuskalo.hr/auti',
         # 'http://www.njuskalo.hr/auti/dacia',
-        #'http://www.njuskalo.hr/auti/toyota',
+        # 'http://www.njuskalo.hr/auti/toyota',
 
         # 'http://www.njuskalo.hr/auti/santana'
     ]
@@ -81,27 +81,35 @@ class NjuskaloSpider(scrapy.Spider):
          
 
     def parse_oglas(self, response):        
-        dataHeaders = response.css('tr th::text').extract()
-        #datavalues=response.css('tr td::text').extract()
-        
-        
+
         result = {
-            'cijena': response.css('.price--hrk::text').extract()[0].strip(),
-            #'title': response.css('.wrap-entity-title--actions .entity-title::text').extract()[0].strip(),
+            'cijena': int(response.css('.price--hrk::text').extract()[0].strip().replace('.','')),
             'id': response.css('.base-entity-id::text').extract()[0].strip(),
 
         }
-        
+
+        dataHeaders = response.css('tr th::text').extract()
+
+        dataHeaders = [ x.replace(':','') for x in dataHeaders ]
+
+        #datavalues=response.css('tr td::text').extract()
+
         for header in dataHeaders:
             try:
                 row = dataHeaders.index(header)                
                 data = response.css('tr:nth-child(' + `row + 1` + ') td::text').extract()
-                if not data:
-                    data = response.css('tr:nth-child(' + `row + 1` + ') time::text').extract()[0]
+
+                if not data: #years are (int) in an attribute
+                    # data = response.css('tr:nth-child(' + `row + 1` + ') time::text').extract()[0]
+                    data = response.css('tr:nth-child(' + `row + 1` + ') time::attr(datetime)').extract()[0]
                 else:
                     data = data[0]
-                
-                result[header] = data.strip()
+                data=data.strip()
+
+                if data.isdigit():
+                    data=int(data)
+
+                result[header] = data
                 
             except:
                 result[header] = ""
