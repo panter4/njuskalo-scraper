@@ -60,7 +60,7 @@ class NjuskaloSpider(scrapy.Spider):
 
             baseUrl = url[:url.index("?page=")]
             pageNo= url[url.index("?page=")+6:]
-            pageNo=int(pageNo)+1
+            pageNo=str(int(pageNo)+1)
             nextUrl=baseUrl + "?page=" + pageNo
 
             print("next page: " + nextUrl)
