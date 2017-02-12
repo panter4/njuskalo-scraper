@@ -7,8 +7,9 @@ from pip.utils import logging
 class NjuskaloSpider(scrapy.Spider):
     name = 'njuskalo'
     start_urls = [
-        'http://www.njuskalo.hr/auti',
+        'http://www.njuskalo.hr/auti'
         # 'http://www.njuskalo.hr/auti/dacia',
+        # 'http://www.njuskalo.hr/auti/land-rover-range-rover',
         # 'http://www.njuskalo.hr/auti/toyota',
 
         # 'http://www.njuskalo.hr/auti/santana'
@@ -30,49 +31,44 @@ class NjuskaloSpider(scrapy.Spider):
         if categoriesList:
             for href in categoriesList:
                 category_url = response.urljoin(href.extract())
-                print 'category found: ' + `category_url`
+                print("category found: " + category_url)
+
                 yield scrapy.Request(category_url, self.parse_category)
         else:
             self.pagenum = 1
-            url=response.url+'?page='+`self.pagenum`
-            print 'paging start: ' + `url`
+            url=response.url+"?page=" + (str)(self.pagenum)
+            print('paging start: ' +url)
 
             yield scrapy.Request(url, self.parse_page)
 
     def parse_page(self, response):
-        for href in response.css('.js-EntityList-item--Regular .entity-title .link::attr(href)'):
+        for href in response.css(".js-EntityList-item--Regular .entity-title .link::attr(href)"):
             oglas_url = response.urljoin(href.extract())             
             yield scrapy.Request(oglas_url, self.parse_oglas)
             
         #print '******************************************************************'
         
         
-        next_page_button = response.css(".pagination-item--next .js-veza-stranica::text")
-        if not next_page_button:
-            next_page_button = response.css(".pagination-item--next_solo .js-veza-stranica::text")
-        if not next_page_button:
-            next_page_button = response.css(".pagination-item--next_solo .link::text")
+        next_page_button = response.css(".Pagination-item--next .Pagination-link::text")
 
-
-        
         if next_page_button:
 
 
-            print 'next page exists after ' + `response.url`
+            print("next page exists after " + response.url)
 
             url = response.url
 
-            baseUrl = url[:url.index('?page=')]
-            pageNo= url[url.index('?page=')+6:]
+            baseUrl = url[:url.index("?page=")]
+            pageNo= url[url.index("?page=")+6:]
             pageNo=int(pageNo)+1
-            nextUrl=baseUrl + '?page='+ `pageNo`
+            nextUrl=baseUrl + "?page=" + pageNo
 
-            print "next page: " + `nextUrl`
+            print("next page: " + nextUrl)
 
             yield scrapy.Request(nextUrl, self.parse_page)
 
         else:
-            print 'last page' + `response.url`
+            print("last page " + response.url)
 
 
             
@@ -97,11 +93,11 @@ class NjuskaloSpider(scrapy.Spider):
         for header in dataHeaders:
             try:
                 row = dataHeaders.index(header)                
-                data = response.css('tr:nth-child(' + `row + 1` + ') td::text').extract()
+                data = response.css('tr:nth-child(' + (str)(row + 1) + ') td::text').extract()
 
                 if not data: #years are (int) in an attribute
                     # data = response.css('tr:nth-child(' + `row + 1` + ') time::text').extract()[0]
-                    data = response.css('tr:nth-child(' + `row + 1` + ') time::attr(datetime)').extract()[0]
+                    data = response.css('tr:nth-child(' + (str)(row + 1) + ') time::attr(datetime)').extract()[0]
                 else:
                     data = data[0]
                 data=data.strip()

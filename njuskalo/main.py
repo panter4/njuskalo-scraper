@@ -1,12 +1,9 @@
 
 #import scrapy
 from scrapy.crawler import CrawlerProcess
-from spiders.njuskalo import NjuskaloSpider
 
+from njuskalo.spiders.njuskalo import NjuskaloSpider
 
-from scrapy.utils.project import get_project_settings
-
-import settings
 
 if __name__ == "__main__":
 #    spider = NjuskaloSpider()    
@@ -33,6 +30,6 @@ if __name__ == "__main__":
     process.crawl(NjuskaloSpider)
     process.start()
     
-    print "done"
+    print ("done")
     
     

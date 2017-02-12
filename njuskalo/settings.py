@@ -11,18 +11,20 @@
 
 BOT_NAME = 'njuskalo'
 
-SPIDER_MODULES = ['spiders']
+SPIDER_MODULES = ['njuskalo.spiders']
  # NEWSPIDER_MODULE = 'njuskalo'
 
 # ITEM_PIPELINES = ['njuskalo.pipelines.JsonWriterPipeline']
 
 
-ITEM_PIPELINES = {'scrapyelasticsearch.scrapyelasticsearch.ElasticSearchPipeline':500}
+ITEM_PIPELINES = {
+    'scrapyelasticsearch.scrapyelasticsearch.ElasticSearchPipeline': 500
+}
 
-ELASTICSEARCH_SERVERS = ['http://search-panter4-p7ocqhgdiixspehfm6hmdseypy.eu-central-1.es.amazonaws.com:80'],
-ELASTICSEARCH_INDEX = 'njuskalo',
-ELASTICSEARCH_INDEX_DATE_FORMAT = '%Y-%m',
-ELASTICSEARCH_TYPE = 'items',
+ELASTICSEARCH_SERVERS = ['http://search-panter42-5xd57hqc64sjtoe3y5tpjnaywi.eu-central-1.es.amazonaws.com:80']
+ELASTICSEARCH_INDEX = 'njuskalo'
+ELASTICSEARCH_INDEX_DATE_FORMAT = "%Y-%m"
+ELASTICSEARCH_TYPE = 'items'
 ELASTICSEARCH_UNIQ_KEY = 'id'  # Custom uniqe key,
 
 

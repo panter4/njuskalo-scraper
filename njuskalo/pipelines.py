@@ -7,7 +7,7 @@
 
 import json
 import time    
-import pymongo
+# import pymongo
 
 from datetime import datetime
 from elasticsearch import Elasticsearch, helpers
@@ -38,36 +38,38 @@ class JsonWriterPipeline(object):
 
 
 
-class MongoPipeline(object):
-
-    collection_name = 'njuskalo_full'
-
-    def __init__(self, mongo_uri, mongo_db):
-        self.mongo_uri = mongo_uri
-        self.mongo_db = mongo_db
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        return cls(
-            # mongo_uri=crawler.settings.get('MONGO_URI'),
-            mongo_uri='localhost',
-            # mongo_db=crawler.settings.get('MONGO_DATABASE', 'items')
-            mongo_db='njuskalo'
-        )
-
-    def open_spider(self, spider):
-        self.client = pymongo.MongoClient(self.mongo_uri)
-        self.db = self.client[self.mongo_db]
-
-    def close_spider(self, spider):
-        self.client.close()
-
-    def process_item(self, item, spider):
-        self.db[self.collection_name].insert(dict(item))
-        return item
-
-
+# class MongoPipeline(object):
 #
+#     collection_name = 'njuskalo_full'
+#
+#     def __init__(self, mongo_uri, mongo_db):
+#         self.mongo_uri = mongo_uri
+#         self.mongo_db = mongo_db
+#
+#     @classmethod
+#     def from_crawler(cls, crawler):
+#         return cls(
+#             # mongo_uri=crawler.settings.get('MONGO_URI'),
+#             mongo_uri='localhost',
+#             # mongo_db=crawler.settings.get('MONGO_DATABASE', 'items')
+#             mongo_db='njuskalo'
+#         )
+#
+#     def open_spider(self, spider):
+#         self.client = pymongo.MongoClient(self.mongo_uri)
+#         self.db = self.client[self.mongo_db]
+#
+#     def close_spider(self, spider):
+#         self.client.close()
+#
+#     def process_item(self, item, spider):
+#         self.db[self.collection_name].insert(dict(item))
+#         return item
+
+
+class InvalidSettingsException(Exception):
+    pass
+
 # class ElasticSearchPipeline(object):
 #     settings = None
 #     es = None
@@ -94,17 +96,8 @@ class MongoPipeline(object):
 #         es_servers = ext.settings.get('ELASTICSEARCH_SERVERS', 'localhost:9200')
 #         es_servers = es_servers if isinstance(es_servers, list) else [es_servers]
 #
-#         authType = ext.settings['ELASTICSEARCH_AUTH']
 #
-#         if authType == 'NTLM':
-#             from .transportNTLM import TransportNTLM
-#             ext.es = Elasticsearch(hosts=es_servers,
-#                                    transport_class=TransportNTLM,
-#                                    ntlm_user= ext.settings['ELASTICSEARCH_USERNAME'],
-#                                    ntlm_pass= ext.settings['ELASTICSEARCH_PASSWORD'],
-#                                    timeout=ext.settings.get('ELASTICSEARCH_TIMEOUT',60))
-#         else :
-#             ext.es = Elasticsearch(hosts=es_servers, timeout=ext.settings.get('ELASTICSEARCH_TIMEOUT', 60))
+#         ext.es = Elasticsearch(hosts=es_servers, timeout=ext.settings.get('ELASTICSEARCH_TIMEOUT', 60))
 #         return ext
 #
 #     def get_unique_key(self, unique_key):
@@ -129,6 +122,7 @@ class MongoPipeline(object):
 #                 dt = datetime.strptime(item[index_suffix_key], index_suffix_key_format)
 #             else:
 #                 dt = datetime.now()
+#             repr(index_suffix_format)
 #             index_name += "-" + datetime.strftime(dt,index_suffix_format)
 #         elif index_suffix_key:
 #             index_name += "-" + index_suffix_key
